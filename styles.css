@@ -1,0 +1,110 @@
+:root {
+  --BorderCol: #1c1c1c;
+  --primaryCol: #d4d4d2;
+  --secondaryCol: #ff9500;
+  --otherOperators: #c2c4c5;
+  --output: #191919;
+  --outputFont: #e7e7e7;
+  --buttonTextFont: #505050;
+}
+
+body {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  height: 100vh;
+  justify-content: center;
+  align-items: center;
+  background: rgb(131, 58, 180);
+  background: linear-gradient(
+    90deg,
+    rgba(131, 58, 180, 1) 0%,
+    rgba(253, 29, 29, 1) 50%,
+    rgba(252, 176, 69, 1) 100%
+  );
+}
+
+.outterWrap {
+  display: flex;
+  border: var(--BorderCol) solid 1px;
+  justify-content: center;
+  align-content: center;
+  height: 30rem;
+}
+.innerWrap {
+  display: grid;
+  grid-template-columns: repeat(4, 5rem);
+}
+
+.innerWrap > * {
+  font-size: 1.5rem;
+  font-style: oblique;
+}
+
+.button {
+  border: var(--BorderCol) solid 1px;
+}
+.output {
+  grid-column-end: span 4;
+  color: var(--outputFont);
+  background-color: var(--output);
+  text-align: right;
+  display: flex;
+  justify-content: end;
+  align-items: flex-end;
+  padding: 0 1rem 0 0;
+}
+.outputText {
+  font-size: 4rem;
+}
+
+.multiply {
+  grid-row-start: 3;
+  grid-column: 4;
+}
+
+.minus {
+  grid-row-start: 4;
+  grid-column: 4;
+}
+
+.add {
+  grid-row-start: 5;
+  grid-column: 4;
+}
+.equals {
+  grid-row-start: 6;
+  grid-column: 4;
+}
+
+.zero {
+  grid-row-start: 6;
+  grid-column-end: span 2;
+}
+.decimal {
+  grid-row-start: 6;
+  grid-column: 3;
+}
+
+.button {
+  color: var(--buttonTextFont);
+}
+
+.multiply,
+.minus,
+.add,
+.equals,
+.divide {
+  background-color: var(--secondaryCol);
+}
+.number,
+.decimal {
+  background-color: var(--primaryCol);
+}
+
+.clear,
+.percent,
+.negative {
+  background-color: var(--otherOperators);
+}
