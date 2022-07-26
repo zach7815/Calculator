@@ -58,6 +58,7 @@ body {
   word-wrap: break-word;
   word-break: break-all;
   padding: 0 1rem 0 0;
+  min-height: 7.188rem;
 }
 .outputText {
   font-size: 4rem;

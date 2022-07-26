@@ -19,23 +19,22 @@ buttons.forEach(button=> button.addEventListener("click", (event)=>{
   const symbolsReg= /[\*|\-|+|\/]/;
   const equalSymbol=/=/;
   currentValue= event.target.value;
-  if(!currentValue.match(numbersReg)&&!currentValue.match(symbolsReg))
+  if(!currentValue.match(equalSymbol)&&!currentValue.match(symbolsReg))
     {
-      alert(" a number has been detected")
-      let digit=parseInt(currentValue);
-      console.log(digit);
-      currentInput.push(digit);
+      
+      currentInput.push(currentValue);
       console.log(currentInput);
     }
   else if (currentValue.match(symbolsReg)){
       if(currentInput.length===0) 
         return;
     else{
-      alert("a symbol has been selected")
-      currentInput.reduce((ac,cv)=>ac+String(cv));
-      console.log(currentInput)
-    currentInput.push(currentValue);
-    console.log(currentInput);
+      currentInput=[currentInput.reduce((ac,cv)=>ac+String(cv))];
+      currentInput.push(currentValue);
+    //  prevOperand.innerText=topOperand;
+
+     console.log(currentInput)
+   
     }
     
   }
