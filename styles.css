@@ -44,15 +44,19 @@ body {
 
 .button {
   border: var(--BorderCol) solid 1px;
+  color: var(--buttonTextFont);
 }
 .output {
   grid-column-end: span 4;
   color: var(--outputFont);
   background-color: var(--output);
-  text-align: right;
   display: flex;
-  justify-content: end;
   align-items: flex-end;
+  justify-content: space-around;
+  flex-direction: column;
+  padding: 10px;
+  word-wrap: break-word;
+  word-break: break-all;
   padding: 0 1rem 0 0;
 }
 .outputText {
@@ -87,10 +91,6 @@ body {
   grid-column: 3;
 }
 
-.button {
-  color: var(--buttonTextFont);
-}
-
 .multiply,
 .minus,
 .add,
@@ -107,4 +107,11 @@ body {
 .percent,
 .negative {
   background-color: var(--otherOperators);
+}
+
+.button:hover {
+  border: solid 3px;
+}
+.button:active {
+  box-shadow: none;
 }
