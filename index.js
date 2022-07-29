@@ -3,110 +3,167 @@ const buttons =document.querySelectorAll(".button");
 const clear =document.querySelector(".clear");
 const numbers=document.querySelectorAll(".number");
 
+
 // https://codepen.io/koselige/pen/XWZLLzv
 // https://codepen.io/wesleybertipaglia/pen/JjLPyNR
 
+const updateDisplay = ()=>{
+  const  currentOperand=document.querySelector(".current-operand");
+  const prevOperand= document.querySelector(".previous-operand");
+  currentOperand.innerText=defaultState.displayDigit;
+ prevOperand.innerText=defaultState.prevOperand;
+ };
+
 const defaultState = {
 displayDigit:"0", 
+prevOperand:"",
 operator:null,
-operatorSelected:false,
-firstDigit:"", 
-secondDigit:"", 
+firstDigit:null, 
+secondDigit:null, 
+currentSum:""
 }
 
 const clearDisplay=()=>{
-  prevOperand.innerText="";
-currentOperand.innerText="0";
-};
-
-
-
-buttons.forEach(button=> button.addEventListener("click", (event)=>{
-  currentValue= event.target.innerText;
-  let symbolRegex= /[\+|\-|\*|\/]/
-if(defaultState.firstDigit===""||defaultState.operator===null||defaultState.secondDigit===""){
-  handleCurrentValue(currentValue, symbolRegex)
+ defaultState.displayDigit="0";
+ defaultState.prevOperand="";
+ defaultState.operator=null;
+ defaultState.firstDigit=null;
+ defaultState.secondDigit=null;
 }
 
+buttons.forEach(button=> button.addEventListener("click", (event)=>{
+  currentValue= event.target
 
-
-
-
-
+  console.log(currentValue.classList)
+  if (currentValue.classList.contains("clear")){
+    clearDisplay();
+    updateDisplay();
+    return;
+  }
+ 
 
   
-    
-    
+  else if(currentValue.classList.contains("negative")){
+    console.log("im running")
+    inverseNumber()
+    updateDisplay()
+  }
 
+
+  else if(currentValue.classList.contains("percent")){
+    console.log(`percent`)
+    percentage();
+    updateDisplay();
+  }
+
+  else if (currentValue.classList.contains("operator")){
+    handleOperation(currentValue.innerText);
+    updateDisplay();
+  }
+
+  else if(currentValue.classList.contains("equals")){
+    console.log("equals selected")
+    updateDisplay();
+  }
+
+  else{
+    
+    inputNumbers(currentValue.innerText);
+    updateDisplay();
+  }
   
   
   
 }));
 
-const updateeDisplay = ()=>{
- let  currentOperand=document.querySelector(".current-operand");
- currentOperand.innerText=defaultState.displayDigit;
-};
+const inputNumbers=(number)=>{
+  if(defaultState.displayDigit==="0"){
+    defaultState.displayDigit=number
+  }
+  else{
+    defaultState.displayDigit+=number
+  }
+}
 
-const inverseNumber= (displayNumber)=>{
-  if (displayNumber===0){
+
+const inverseNumber= ()=>{
+  if (defaultState.displayDigit===0){
     return
   }
   else{
-    displayNumber*-1;
+   defaultState.displayDigit=defaultState.displayDigit*-1;
   }
 };
 
 
-const handleCurrentValue=(currentValue, symbolRegex)=>{ 
-  if(currentValue.match(symbolRegex)&&defaultState.firstDigit===null){
-    return;
+const percentage=()=>{
+if(defaultState.displayDigit==="0"||defaultState.displayDigit<0)
+{
+  defaultState.displayDigit==="0";
+  defaultState.prevOperand==="0";
+}
+else{
+ defaultState.displayDigit= defaultState.displayDigit/10;
+}
+};
+
+
+
+const handleOperation=(operation)=>{
+if (defaultState.operator===null){
+  defaultState.operator=operation;
+  defaultState.currentSum= defaultState.prevOperand=defaultState.displayDigit+operation
+  
+  defaultState.firstDigit=defaultState.displayDigit;
+  defaultState.displayDigit="0";
+  defaultState.operatorSelected=true;
   }
-  else if (defaultState.operator===null&&!currentValue.match(symbolRegex)){
-    defaultState.firstDigit+=String(currentValue)
-    console.log(defaultState.firstDigit)
-  }
-  else if(defaultState.firstDigit!==""&& currentValue.match(symbolRegex)){
-    defaultState.operator=currentValue;
-    console.log(defaultState.operator);
-    console.log(defaultState);
-  }
-  else if( defaultState.firstDigit!==""&&defaultState.operator!==null){
-    defaultState.secondDigit+=String(currentValue);
-    console.log(defaultState);
-  }
+ 
+  else if(defaultState.operator!==null && defaultState.secondDigit===null) {
+defaultState.secondDigit=defaultState.displayDigit;
+handleTwoPlusNumbers();
 
 }
 
+}
 
-
-
-
-
-const performCalculation=(num1, operator, num2)=>{
-  let result=null;
-switch (operator){
+const handleTwoPlusNumbers=()=>{
+  let result=0
+switch (defaultState.operator){
   case "+":
-    result= num1+num2;
-    break
-    case "-":
-      result=num1-num2;
-      break
-      case "/":
-        result=num1/num2;
-        break
-        case "*": 
-       result= num1*num2;
-        break
-        case "%":
-        result=num1/10
-        break
+ result=parseInt(defaultState.firstDigit)+parseInt(defaultState.secondDigit);
+ resetValues(result);
+break
+
+case "/":
+  result=parseInt(defaultState.firstDigit)/parseInt(defaultState.secondDigit);
+  resetValues(result);
+  break
+  case "*":
+    result=parseInt(defaultState.firstDigit)*parseInt(defaultState.secondDigit);
+    resetValues(result);
+  case "-":
+    result=parseInt(defaultState.firstDigit)-parseInt(defaultState.secondDigit);
+    resetValues(result);
+  break
+
+}
+defaultState.displayDigit=result;
+
 }
 
-return result;
+const calculateResult=()=>{
+
+
+
 }
 
-clear.addEventListener("click", clearDisplay);
+const resetValues = (result)=>{
+  defaultState.firstDigit=result;
+  defaultState.secondDigit=null;
+  defaultState.operator=null;
+}
 
-updateeDisplay();
+
+updateDisplay();
 
