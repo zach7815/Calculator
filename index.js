@@ -1,11 +1,7 @@
-
 const buttons =document.querySelectorAll(".button");
 const clear =document.querySelector(".clear");
 const numbers=document.querySelectorAll(".number");
 
-
-// https://codepen.io/koselige/pen/XWZLLzv
-// https://codepen.io/wesleybertipaglia/pen/JjLPyNR
 
 const updateDisplay = ()=>{
   const  currentOperand=document.querySelector(".current-operand");
@@ -20,7 +16,6 @@ prevOperand:"",
 operator:null,
 firstDigit:null, 
 secondDigit:null, 
-currentSum:""
 }
 
 const clearDisplay=()=>{
@@ -33,8 +28,6 @@ const clearDisplay=()=>{
 
 buttons.forEach(button=> button.addEventListener("click", (event)=>{
   currentValue= event.target
-
-  console.log(currentValue.classList)
   if (currentValue.classList.contains("clear")){
     clearDisplay();
     updateDisplay();
@@ -44,32 +37,47 @@ buttons.forEach(button=> button.addEventListener("click", (event)=>{
 
   
   else if(currentValue.classList.contains("negative")){
-    console.log("im running")
     inverseNumber()
     updateDisplay()
   }
 
 
   else if(currentValue.classList.contains("percent")){
-    console.log(`percent`)
     percentage();
     updateDisplay();
   }
 
   else if (currentValue.classList.contains("operator")){
+    console.log("another symbol is detected")
+    if (defaultState.firstDigit!==null&&defaultState.secondDigit!==null){
+      console.log("another symbol is detected")
+      calculateResult(defaultState.firstDigit, defaultState.operator, defaultState.secondDigit);
+      defaultState.operator=currentValue.innerText;
+      console.log("new symbol is" + currentValue.innerText);
+    }
+
     handleOperation(currentValue.innerText);
     updateDisplay();
   }
 
   else if(currentValue.classList.contains("equals")){
-    console.log("equals selected")
+    defaultState.secondDigit=defaultState.displayDigit;
+    calculateResult(defaultState.firstDigit, defaultState.operator, defaultState.secondDigit);
     updateDisplay();
   }
 
   else{
-    
-    inputNumbers(currentValue.innerText);
-    updateDisplay();
+    if(defaultState.doneCalc===true){
+      
+      resetValues();
+      console.log(defaultState);
+      inputNumbers(currentValue.innerText);
+      updateDisplay();
+    }
+    else{
+      inputNumbers(currentValue.innerText);
+      updateDisplay();
+    }
   }
   
   
@@ -112,56 +120,61 @@ else{
 const handleOperation=(operation)=>{
 if (defaultState.operator===null){
   defaultState.operator=operation;
-  defaultState.currentSum= defaultState.prevOperand=defaultState.displayDigit+operation
-  
+  defaultState.currentSum= defaultState.prevOperand=defaultState.displayDigit+operation;
   defaultState.firstDigit=defaultState.displayDigit;
   defaultState.displayDigit="0";
-  defaultState.operatorSelected=true;
   }
  
   else if(defaultState.operator!==null && defaultState.secondDigit===null) {
 defaultState.secondDigit=defaultState.displayDigit;
-handleTwoPlusNumbers();
 
 }
 
 }
 
-const handleTwoPlusNumbers=()=>{
-  let result=0
-switch (defaultState.operator){
-  case "+":
- result=parseInt(defaultState.firstDigit)+parseInt(defaultState.secondDigit);
- resetValues(result);
-break
 
-case "/":
-  result=parseInt(defaultState.firstDigit)/parseInt(defaultState.secondDigit);
-  resetValues(result);
-  break
-  case "*":
-    result=parseInt(defaultState.firstDigit)*parseInt(defaultState.secondDigit);
-    resetValues(result);
-  case "-":
-    result=parseInt(defaultState.firstDigit)-parseInt(defaultState.secondDigit);
-    resetValues(result);
-  break
-
+const calculateResult=(number1, operator, number2)=>{
+  let result=0;
+if (number2==null){
+  number2=defaultState.displayDigit;
+ 
 }
+  let num1= parseFloat(number1);
+  let num2=parseFloat(number2);
+if (operator==="+"){
+  result+=num1+num2;
+}
+else if (operator=="x"){
+  result+=num1*num2;
+
+  
+}
+else if(operator=="-"){
+ result+=num1-num2;
+ 
+}
+else {
+  result+=num1/num2;
+
+  
+}
+defaultState.prevOperand="";
+defaultState.firstDigit=result;
+defaultState.operator=null;
+defaultState.secondDigit=null;
+defaultState.currentSum=null;
 defaultState.displayDigit=result;
-
-}
-
-const calculateResult=()=>{
-
+defaultState.doneCalc=true;
 
 
 }
 
-const resetValues = (result)=>{
-  defaultState.firstDigit=result;
+const resetValues = ()=>{
+  console.log("reset ran")
+  console.log(defaultState)
   defaultState.secondDigit=null;
-  defaultState.operator=null;
+  defaultState.displayDigit="0";
+  delete defaultState.doneCalc
 }
 
 
