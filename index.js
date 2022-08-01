@@ -16,6 +16,7 @@ prevOperand:"",
 operator:null,
 firstDigit:null, 
 secondDigit:null, 
+currentSum:""
 }
 
 const clearDisplay=()=>{
@@ -24,6 +25,7 @@ const clearDisplay=()=>{
  defaultState.operator=null;
  defaultState.firstDigit=null;
  defaultState.secondDigit=null;
+
 }
 
 buttons.forEach(button=> button.addEventListener("click", (event)=>{
@@ -48,12 +50,12 @@ buttons.forEach(button=> button.addEventListener("click", (event)=>{
   }
 
   else if (currentValue.classList.contains("operator")){
-    console.log("another symbol is detected")
-    if (defaultState.firstDigit!==null&&defaultState.secondDigit!==null){
-      console.log("another symbol is detected")
+    console.log(defaultState);
+    if (defaultState.firstDigit!==null&&defaultState.displayDigit!==null){
+      console.log(defaultState.prevOperand)
       calculateResult(defaultState.firstDigit, defaultState.operator, defaultState.secondDigit);
+      console.log(defaultState.prevOperand);
       defaultState.operator=currentValue.innerText;
-      console.log("new symbol is" + currentValue.innerText);
     }
 
     handleOperation(currentValue.innerText);
