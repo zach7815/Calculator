@@ -66,9 +66,19 @@ buttons.forEach(button=> button.addEventListener("click", (event)=>{
   }
 
   else if(currentValue.classList.contains("equals")){
-    defaultState.secondDigit=defaultState.displayDigit;
-    calculateResult(defaultState.firstDigit, defaultState.operator, defaultState.secondDigit);
-    updateDisplay();
+if(defaultState.firstDigit===null ||defaultState.operator===null){
+ return
+
+
+}
+else{
+  console.log("I'm logging")
+  defaultState.secondDigit=defaultState.displayDigit;
+  calculateResult(defaultState.firstDigit, defaultState.operator, defaultState.secondDigit);
+  updateDisplay();
+
+}
+   
   }
 
   else{
