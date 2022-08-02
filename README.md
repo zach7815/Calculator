@@ -33,8 +33,8 @@ In this I faced the problem for a while of the numbers just  concatenating and t
 
 ### Links
 
-- Solution URL: [Add solution URL here](https://github.com/zach7815/Calculator)
-- Live Site URL: [Add live site URL here](https://zach7815.github.io/Calculator/)
+- Solution URL: [Repository](https://github.com/zach7815/Calculator)
+- Live Site URL: [Live Link](https://zach7815.github.io/Calculator/)
 
 ## My process
 For this calculator, I focused on the HTML and CSS first, then moved onto the JavaScript. I focused, first on identifying what functions and features would needed, and wrote out what roughly each function would do and when and where they need to interact with one another. For this project I decided to use a object "defaultState" to track, store and set the different states of the calculator app. 
