@@ -36,7 +36,6 @@ buttons.forEach(button=> button.addEventListener("click", (event)=>{
     return;
   }
  
-
   
   else if(currentValue.classList.contains("negative")){
     inverseNumber()
@@ -50,12 +49,16 @@ buttons.forEach(button=> button.addEventListener("click", (event)=>{
   }
 
   else if (currentValue.classList.contains("operator")){
-    console.log(defaultState);
+
     if (defaultState.firstDigit!==null&&defaultState.displayDigit!==null){
-      console.log(defaultState.prevOperand)
-      calculateResult(defaultState.firstDigit, defaultState.operator, defaultState.secondDigit);
-      console.log(defaultState.prevOperand);
-      defaultState.operator=currentValue.innerText;
+
+     
+      if(defaultState.doneCalc===true){
+      delete defaultState.doneCalc;
+      }
+      else{
+        calculateResult(defaultState.firstDigit, defaultState.operator, defaultState.secondDigit);
+      }
     }
 
     handleOperation(currentValue.innerText);
@@ -72,7 +75,6 @@ buttons.forEach(button=> button.addEventListener("click", (event)=>{
     if(defaultState.doneCalc===true){
       
       resetValues();
-      console.log(defaultState);
       inputNumbers(currentValue.innerText);
       updateDisplay();
     }
@@ -158,7 +160,6 @@ else if(operator=="-"){
 else {
   result+=num1/num2;
 
-  
 }
 defaultState.prevOperand="";
 defaultState.firstDigit=result;
@@ -172,8 +173,6 @@ defaultState.doneCalc=true;
 }
 
 const resetValues = ()=>{
-  console.log("reset ran")
-  console.log(defaultState)
   defaultState.secondDigit=null;
   defaultState.displayDigit="0";
   delete defaultState.doneCalc
